@@ -67,6 +67,7 @@ tswitch:
 //       ---------------------------------------------
 // stack=r0,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,r14
 //       ---------------------------------------------
+  bl int_off
   stmfd	sp!, {r0-r12, lr}
 
   LDR r0, =running     // r0=&running
@@ -78,6 +79,7 @@ tswitch:
   LDR r0, =running
   LDR r1, [r0, #0]     // r1->runningPROC
   lDR sp, [r1, #4]
+  bl int_on
   ldmfd	sp!, {r0-r12, pc}
 
 // int_on()/int_off(): turn on/off IRQ interrupts
