@@ -1,0 +1,6 @@
+#!/bin/bash
+
+
+rm bin/*
+
+
