@@ -269,6 +269,19 @@ int fstat(int fd, char *sptr)
   return syscall(30,fd,sptr,0);
 }
 
+/*
+    setup console for stdin, stdout, and stderr
+    must be run before any other open or close syscalls
+*/
+void setupConsole()
+{
+    // stdin(0)
+    open("/dev/tty0", O_RDONLY);
+    // stdout(1)
+    open("/dev/tty0", O_WRONLY);
+    // stderr(2)
+    open("/dev/tty0", O_WRONLY);
+}
 
 int open(char *file, int flag)
 {
