@@ -299,6 +299,26 @@ int lseek(int fd, u32 offset, int ww)
    return syscall(33, fd, (u32)offset, ww);
 }
 
+
+int readline(int fd, char *s)
+{
+  int c;  
+  char *cp = s;
+  
+  read(fd, &c, 1);
+
+  while ((c != EOF) && (c != '\r') && (c != '\n')){
+    *cp++ = c;
+     c = getc();
+  }
+  if (c==EOF) return 0;
+
+  *cp++ = c;         // a string with last char=\n or \r
+  *cp = 0;    
+  //printf("getline: %s", s); 
+  return strlen(s);  // at least 1 because last char=\r or \n
+}
+
 int read(int fd, char *buf, int nbytes)
 {
   if (fd==0)
