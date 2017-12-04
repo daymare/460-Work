@@ -1,3 +1,6 @@
+#ifndef UCODE
+#define UCODE
+
 /********************************************************************
 Copyright 2010-2017 K.C. Wang, <kwang@eecs.wsu.edu>
 This program is free software: you can redistribute it and/or modify
@@ -575,3 +578,5 @@ int strcasecmp(char *s1, char *s2)
   return strcmp(t1, t2);
 }
 */
+
+#endif
