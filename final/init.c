@@ -4,7 +4,6 @@
 int main()
 {
     setupConsole();
-    printf("hellllllooo! Proc 1 here!");
 
     // fork P2, login process
     forkLogin();
@@ -24,7 +23,7 @@ void forkLogin()
     if (pid == 0)
     {
         // child process, exec init process
-        exec("init");
+        exec("login");
     }
 
     // parent continues
