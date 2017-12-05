@@ -50,6 +50,13 @@ int getc()
    return (c&0x7F);
 }
 
+
+void waitKey()
+{
+    char dummy[50];
+    getline(dummy);
+}
+
 // getline() does NOT show the input chars AND no cooking: 
 // for reditected inputs from a file which may contain '\b' chars
 
@@ -305,16 +312,19 @@ int lseek(int fd, u32 offset, int ww)
 
 int readline(int fd, char *s)
 {
-  int c;  
+  char c;  
   char *cp = s;
+  int result = 1;
   
-  read(fd, &c, 1);
+  result = read(fd, &c, 1);
 
-  while ((c != EOF) && (c != '\r') && (c != '\n')){
+  while (result != 0 && (c != EOF) && (c != '\r') && (c != '\n')){
     *cp++ = c;
-     c = getc();
+     result = read(fd, &c, 1);
   }
+
   if (c==EOF) return 0;
+  if (result == 0) return 0;
 
   *cp++ = c;         // a string with last char=\n or \r
   *cp = 0;    
