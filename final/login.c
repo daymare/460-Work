@@ -50,6 +50,8 @@ void parseLoginFile(User * o_userList)
         result = parseUser(fd, currentUser);
         currentUser++;
     }
+
+    close(fd);
 }
 
 int parseUser(int fd, User * user)
@@ -98,6 +100,7 @@ int parseUser(int fd, User * user)
     // get the start program
     char* start_program = new_line;
     new_line = strtok(new_line, ':');
+    normalize(start_program);
     strcpy(user->program, start_program);
 
     // mark the user structure as populated and return
@@ -114,7 +117,6 @@ User* getUsername(char* username, User* userlist)
     while(currentUser->populated == 1)
     {
         int result = strcmp(username, currentUser->username);
-        printf("%s equals\? %s : %d\n", username, currentUser->username, result);
         if (result == 0)
         {
             return currentUser;
@@ -132,6 +134,10 @@ int main()
     // setup console IO
     setupConsole();
 
+    // TODO remove
+    printf("override login process, run shell\n");
+    exec("sh");
+
     // parse the login file
     User users[20];
     parseLoginFile(users);
@@ -144,6 +150,7 @@ int main()
         char username[50];
         printf("username: ");
         getline(username);
+        printf("\n");
 
         // remove the /r or /n from the end of username
         normalize(username);
@@ -158,22 +165,21 @@ int main()
 
         // ask user for their password
         char password[50];
-        printf("password: \n");
+        printf("password: ");
         getline(password);
+        printf("\n");
         normalize(password);
         
         // check that thier password is valid
-        int cmp = strcmp(password, desiredUser->password)
+        int cmp = strcmp(password, desiredUser->password);
+        if (cmp != 0)
         {
-            if (cmp != 0)
-            {
-                printf("invalid password!\n");
-                continue;
-            }
-            else
-            {
-                break;
-            }
+            printf("invalid password!\n");
+            continue;
+        }
+        else
+        {
+            break;
         }
     }
 
@@ -183,7 +189,7 @@ int main()
     chdir(desiredUser->homedir);
 
     // take on the users uid
-    chuid(desiredUser->uid, desiredUser->gid);
+    chuid(desiredUser->pid, desiredUser->gid);
 
     // exec their startup program
     exec(desiredUser->program);
