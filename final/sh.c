@@ -8,10 +8,12 @@ int main()
     while(1)
     {
         // prompt for a command
-        pwd();
-        printf(": ");
+        char cwd[64];
+        getcwd(cwd);
+        printf("%s : ", cwd);
+
         char command[50];
-        getline(command);
+        gets(command);
         normalize(command);
 
         // check for logout
