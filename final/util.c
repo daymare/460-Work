@@ -46,6 +46,12 @@ void replace(char* string, char character, char replacement)
 }
 
 
+int toUpper(int c)
+{
+    return c - 'a' + 'A';
+}
+
+
 
 /*
 void strcpy(char* destination, char* source)
