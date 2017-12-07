@@ -3,6 +3,49 @@
 
 #include "ucode.c"
 
+/*
+    check pattern.
+    input: pattern to check, line to check for pattern in
+    output: 1 if pattern is found, 0 otherwise
+*/
+int checkPattern(char* pattern, char* line)
+{
+    char* current_line = line;
+    char* start_match = line;
+    char* current_pattern = pattern;
+
+
+    while (*current_line != '\0')
+    {
+        // check if the current character matches the start of the pattern
+        if (*current_line == *pattern)
+        {
+            start_match = current_line;
+
+            // check the rest of the pattern
+            while (*current_line == *current_pattern)
+            {
+                current_line++;
+                current_pattern++;
+
+
+                if (*current_pattern == '\0')
+                {
+                    return 1;
+                }
+            }
+    
+            // return to starting point and continue checking the string
+            current_line = start_match;
+            current_pattern = pattern;
+        }
+
+        current_line++;
+    }
+
+    return 0;
+}
+
 
 /*
     strtok

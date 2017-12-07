@@ -7,11 +7,10 @@ run: program
 
 # phony commands, for better packaging
 bootup: bin/init bin/login bin/sh
-commands: bin/cat bin/more bin/l2u
+commands: bin/cat bin/more bin/l2u bin/grep
 
 # standard includes
 lib: ucode.c util.c
-
 
 # bootup targets
 bin/init: init.c lib
@@ -33,6 +32,9 @@ bin/more: more.c lib
 
 bin/l2u: l2u.c lib
 	./make.bash l2u
+
+bin/grep: grep.c lib
+	./make.bash grep
 
 
 # clean
