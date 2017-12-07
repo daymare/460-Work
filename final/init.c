@@ -3,8 +3,6 @@
 
 int main()
 {
-    setupConsole();
-
     // fork P2, login process
     forkLogin();
 
