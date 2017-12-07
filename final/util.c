@@ -48,7 +48,14 @@ void replace(char* string, char character, char replacement)
 
 int toUpper(int c)
 {
-    return c - 'a' + 'A';
+    if (c >= 'a' && c <= 'z')
+    {
+        return c - 'a' + 'A';
+    }
+    else
+    {
+        return c;
+    }
 }
 
 
