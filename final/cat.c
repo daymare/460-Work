@@ -5,9 +5,7 @@
 
 int main(int argc, char * argv[])
 {
-    setupConsole();
-
-    if (argc == 2)
+    if (argc > 1)
     {
         // open the proper file and use it
         close(0); // close stdin
